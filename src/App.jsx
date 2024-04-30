@@ -1,79 +1,47 @@
 import { useEffect, useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
+import CartaPokemon from './Components/CartaPokemon/CartaPokemon';
 import './App.css';
 
-
 function numRandom(){
-  const numRandom = Math.floor(Math.random() * 150) + 1;
-  return numRandom;
+  return Math.floor(Math.random() * 150) + 1;
 } 
 
-
-
 export default function App() {
-  const [pokemon, setPokemon] = useState("");
-  const [numId, setnumId] = useState(numRandom());
+  const [pokemon, setPokemon] = useState(null);
+  const [numId, setNumId] = useState(numRandom());
+  const [loading, setLoading] = useState(false); // Estado para controlar la carga
 
   useEffect(() => {
     const pickPokemon = async () => {
-       
-      const response = await fetch(
-         `https://pokeapi.co/api/v2/pokemon/${numId}`);
-      const data = await response.json();
-      setPokemon(data);
-    
-  };
+      setLoading(true); // Activar la carga antes de la solicitud
+      try {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${numId}`);
+        const data = await response.json();
+        setPokemon(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false); // Desactivar la carga después de la solicitud (independientemente del resultado)
+      }
+    };
     pickPokemon();
-    console.log("hola")
-  }, [numId]); 
+  }, [numId]);
 
-
-  
   const handleReload = () => {
-    setnumId(numRandom);
+    if (!loading) { // Solo se puede recargar si no hay una carga en curso
+      setNumId(numRandom);
+    }
   }
 
   return (
     <>
       {pokemon && (
-        <div className="pokemon-card flex items-center flex-col bg-white shadow-xl rounded-2xl h-80 w-72 justify-around relative overflow-hidden">
-          <img
-            className="block w-full h-28 -mt-4"
-            src={"./assets/bg-pattern-card.svg"}
-          />
-          <div className="card-body flex flex-col">
-            <img
-              className="w-40 h-40 rounded-full -mt-24  bg-white"
-              src={pokemon.sprites.other.dream_world.front_default}
-            />
-            <p className="text-sm  text-gray-500">
-            
-              <span className="font-bold capitalize text-sm text-black">
-                {pokemon.name}</span>{" "} 
-                {pokemon.stats[0].base_stat} hp
-
-            </p>
-            <p className="text-sm mt-1  text-gray-500">
-              {pokemon.base_experience} exp
-            </p>
-          </div>
-          <div className="text-black text-sm flex flex-row justify-around w-full content-center">
-            <div className="flex flex-col">
-              <h3 className="font-bold text-xs mb-1">{pokemon.stats[1].base_stat}</h3>
-              <p className="text-xs">Ataque</p>
-            </div>
-            <div className="flex flex-col">
-              <h3 className="font-bold text-xs mb-1">{pokemon.stats[3].base_stat}</h3>
-              <p className="text-xs">Ataque Especial</p>
-            </div>
-            <div className="flex flex-col">
-              <h3 className="font-bold text-xs mb-1">{pokemon.stats[2].base_stat}</h3>
-              <p className="text-xs">Defensa</p>
-            </div>
-          </div>
-          <button className="" onClick={handleReload}>Generar Pokémon</button>
-        </div>
+        <>
+          <CartaPokemon pokemon={pokemon}/>
+          <button className="mt-4" onClick={handleReload} disabled={loading}>
+            {loading ? <div className="loader"></div> : 'Generar Pokémon'}
+          </button> {/* Deshabilitar el botón mientras está cargando */}
+        </>
       )}
     </>
   );
