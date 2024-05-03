@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 
-function PokemonCard({ pokemon }) {
+
+function PokemonCard({ pokemon, loading }) {
   return (
     <>
     <div className="pokemon-card flex items-center flex-col bg-white shadow-xl rounded-2xl h-80 w-72 justify-around relative overflow-hidden">
@@ -11,7 +12,9 @@ function PokemonCard({ pokemon }) {
           <div className="card-body flex flex-col">
             <img
               className="w-40 h-40 rounded-full -mt-24  bg-white"
-              src={pokemon.sprites.other.dream_world.front_default}
+              src={ loading? "https://pm1.aminoapps.com/6532/8441679e98967e38588e00e7a65f788ca0f820ee_00.jpg" 
+                 : pokemon.sprites.other.dream_world.front_default}
+
             />
             <p className="text-sm  text-gray-500">
             

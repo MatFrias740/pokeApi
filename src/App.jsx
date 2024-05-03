@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import CartaPokemon from './Components/CartaPokemon/CartaPokemon';
+import BotonRecarga from './Components/BotonRecarga/BotonRecarga';
+import { numRandom } from './Components/NumRandom/NumRandom';
 import './App.css';
 
-function numRandom(){
-  return Math.floor(Math.random() * 150) + 1;
-} 
+
 
 export default function App() {
   const [pokemon, setPokemon] = useState(null);
@@ -29,18 +29,18 @@ export default function App() {
 
   const handleReload = () => {
     if (!loading) { // Solo se puede recargar si no hay una carga en curso
-      setNumId(numRandom);
+      setNumId(numRandom()); // Utiliza la función para generar un nuevo número aleatorio
     }
   }
+
+
 
   return (
     <>
       {pokemon && (
         <>
-          <CartaPokemon pokemon={pokemon}/>
-          <button className="mt-4" onClick={handleReload} disabled={loading}>
-            {loading ? <div className="loader"></div> : 'Generar Pokémon'}
-          </button> {/* Deshabilitar el botón mientras está cargando */}
+          <CartaPokemon pokemon={pokemon} loading={loading}/>
+          <BotonRecarga onClick={handleReload} loading={loading}/>
         </>
       )}
     </>
