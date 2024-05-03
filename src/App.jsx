@@ -5,18 +5,6 @@ import { numRandom } from './Components/NumRandom/NumRandom';
 import './App.css';
 
 
-<<<<<<< HEAD
-=======
-//---> Esta funcion la puedes meter dentro del componente
-function numRandom() {
-  return Math.floor(Math.random() * 150) + 1;
-}
-
-
-//---> En App importa los componentes para dejarlos lo mas limpio posible
-//---> Mueve toda la logica a otro componente
-//---> Mira el orden como declaraste variables, funciones,etc. dentro del componente
->>>>>>> 6d585585e102c0c623917a71054d6eb09f604f98
 
 export default function App() {
   const [pokemon, setPokemon] = useState(null);
@@ -53,19 +41,8 @@ export default function App() {
     <>
       {pokemon && (
         <>
-<<<<<<< HEAD
           <CartaPokemon pokemon={pokemon} loading={loading}/>
           <BotonRecarga onClick={handleReload} loading={loading}/>
-=======
-          <CartaPokemon pokemon={pokemon} />
-          <button className="mt-4" onClick={handleReload} disabled={loading}>
-
-            {/*---> Cuando esta cargado se quita el texto y el boton se hace pequeño, eso no debe pasar.
-               ---> Cuando este cargando aparte del texto debe aparecer un spinner indicando que se esta haciendo la peticion
-          */}
-            {loading ? <div className="loader"></div> : 'Generar Pokémon'}
-          </button> {/* Deshabilitar el botón mientras está cargando */}
->>>>>>> 6d585585e102c0c623917a71054d6eb09f604f98
         </>
       )}
     </>
