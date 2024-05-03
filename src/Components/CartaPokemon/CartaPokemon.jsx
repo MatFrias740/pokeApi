@@ -2,6 +2,7 @@
 
 function PokemonCard({ pokemon }) {
   return (
+    <>
     <div className="pokemon-card flex items-center flex-col bg-white shadow-xl rounded-2xl h-80 w-72 justify-around relative overflow-hidden">
           <img
             className="block w-full h-28 -mt-4"
@@ -23,8 +24,7 @@ function PokemonCard({ pokemon }) {
               {pokemon.base_experience} exp
             </p>
           </div>
-          <hr className="w-full border-black-" /> 
-          <div className="text-black text-sm flex flex-row justify-around w-full content-center border-t border-black-500">
+          <div className="text-black text-sm flex flex-row justify-around w-full content-center border-t border-black-500 py-5">
             <div className="flex flex-col">
               <h3 className="font-bold text-xs mb-1">{pokemon.stats[1].base_stat}</h3>
               <p className="text-xs">Ataque</p>
@@ -39,6 +39,7 @@ function PokemonCard({ pokemon }) {
             </div>
           </div>
         </div>
+        </>
   );
 }
 
