@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import CartaPokemon from './Components/CartaPokemon/CartaPokemon';
 import BotonRecarga from './Components/BotonRecarga/BotonRecarga';
-import { numRandom } from './Components/NumRandom/NumRandom';
+import { numRandom } from './Components/CartaPokemon/CartaPokemon.utils/GeneradorNum'
 import './App.css';
 
 
@@ -12,30 +12,32 @@ export default function App() {
   const [loading, setLoading] = useState(false); // Estado para controlar la carga
 
   useEffect(() => {
-    const pickPokemon = async () => {
+    const pickPokemon = () => {
       setLoading(true); // Activar la carga antes de la solicitud
-      try {
-
-        //---> Funciona bien, pero cambia la forma del fetch y utiliza el then para contatenar el siguiente paso con "data"
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${numId}`);
-        const data = await response.json();
-        setPokemon(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        setLoading(false); // Desactivar la carga después de la solicitud (independientemente del resultado)
-      }
+      fetch(`https://pokeapi.co/api/v2/pokemon/${numId}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Fallo al conectar :C');
+          }
+          return response.json();
+        })
+        .then(data => {
+          setPokemon(data);
+          setLoading(false); // Desactivar la carga después de la solicitud
+        })
+        .catch(error => {
+          console.error('Error al hacer fetch:', error);
+          setLoading(false); // Desactivar la carga después de la solicitud en caso de error
+        });
     };
     pickPokemon();
   }, [numId]);
 
   const handleReload = () => {
-    if (!loading) { // Solo se puede recargar si no hay una carga en curso
+    if (!loading) { 
       setNumId(numRandom()); // Utiliza la función para generar un nuevo número aleatorio
     }
   }
-
-
 
   return (
     <>
