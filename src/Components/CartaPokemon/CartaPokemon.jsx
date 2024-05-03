@@ -28,19 +28,19 @@ function PokemonCard({ pokemon, loading }) {
       <div className="text-black text-sm flex flex-row justify-around w-full content-center border-t border-black-500 py-5">
         <div className="flex flex-col">
           <h3 className="font-bold text-xs mb-1">
-            {pokemon.stats[1].base_stat}
+            {pokemon.stats[1].base_stat}k
           </h3>
           <p className="text-xs">Ataque</p>
         </div>
         <div className="flex flex-col">
           <h3 className="font-bold text-xs mb-1">
-            {pokemon.stats[3].base_stat}
+            {pokemon.stats[3].base_stat}k
           </h3>
           <p className="text-xs">Ataque Especial</p>
         </div>
         <div className="flex flex-col">
           <h3 className="font-bold text-xs mb-1">
-            {pokemon.stats[2].base_stat}
+            {pokemon.stats[2].base_stat}k
           </h3>
           <p className="text-xs">Defensa</p>
         </div>
